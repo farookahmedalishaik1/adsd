@@ -24,7 +24,8 @@
 
     <hr>
 
-    <!-- Add Maintenance Record Form -->
+    <!-- Add Maintenance Record Form (only if vehicle_id is available) -->
+    {% if vehicle_id %}
     <h2>Add Maintenance Record</h2>
     <form action="/vehicle/{{ vehicle_id }}/maintenance/add" method="post">
         <label for="service_date">Service Date:</label>
@@ -35,5 +36,6 @@
         <input type="number" id="cost" name="cost" step="0.01" required><br>
         <button type="submit">Add Maintenance Record</button>
     </form>
+    {% endif %}
 </body>
 </html>
