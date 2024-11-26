@@ -4,35 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vehicle List</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <div class="container mt-4">
-        <h2>Vehicle List</h2>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Make</th>
-                    <th>Model</th>
-                    <th>Owner</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for vehicle in vehicles %}
-                <tr>
-                    <td>{{ vehicle['make'] }}</td>
-                    <td>{{ vehicle['model'] }}</td>
-                    <td>{{ vehicle['owner'] }}</td>
-                    <td>
-                        <a href="/update/{{ vehicle['id'] }}" class="btn btn-warning btn-sm">Edit</a>
-                        <a href="/delete/{{ vehicle['id'] }}" class="btn btn-danger btn-sm">Delete</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <a href="/create" class="btn btn-primary">Add New Vehicle</a>
-    </div>
+    <h1>Vehicle List</h1>
+    <a href="/add">Add New Vehicle or Maintenance Record</a>
+    <table border="1">
+        <tr>
+            <th>Vehicle ID</th>
+            <th>Owner</th>
+            <th>Make</th>
+            <th>Model</th>
+            <th>Year</th>
+            <th>Last Service Date</th>
+            <th>Actions</th>
+        </tr>
+        {% for vehicle in vehicles %}
+        <tr>
+            <td>{{ vehicle[0] }}</td>
+            <td>{{ vehicle[1] }}</td>
+            <td>{{ vehicle[2] }}</td>
+            <td>{{ vehicle[3] }}</td>
+            <td>{{ vehicle[4] }}</td>
+            <td>{{ vehicle[5] }}</td>
+            <td>
+                <a href="/vehicle/{{ vehicle[0] }}/maintenance">View Maintenance</a> |
+                <a href="/update/{{ vehicle[0] }}">Edit</a> |
+                <a href="/delete/{{ vehicle[0] }}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <hr>
+
+    <h2>Maintenance Records</h2>
+    <table border="1">
+        <tr>
+            <th>Record ID</th>
+            <th>Vehicle ID</th>
+            <th>Service Date</th>
+            <th>Description</th>
+            <th>Cost</th>
+            <th>Actions</th>
+        </tr>
+        {% for record in maintenance_records %}
+        <tr>
+            <td>{{ record[0] }}</td>
+            <td>{{ record[1] }}</td>
+            <td>{{ record[2] }}</td>
+            <td>{{ record[3] }}</td>
+            <td>{{ record[4] }}</td>
+            <td>
+                <a href="/maintenance/update/{{ record[0] }}">Edit</a> |
+                <a href="/maintenance/delete/{{ record[0] }}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
 </body>
 </html>
