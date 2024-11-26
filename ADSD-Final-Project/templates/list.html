@@ -1,1 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-4">
+        <h2>Vehicle Maintenance List</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Make</th>
+                    <th>Model</th>
+                    <th>Owner</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in rows %}
+                    <tr>
+                        <td>{{ row[1] }}</td>  <!-- Make -->
+                        <td>{{ row[2] }}</td>  <!-- Model -->
+                        <td>{{ row[3] }}</td>  <!-- Owner -->
+                        <td>
+                            <a href="/update/{{ row[0] }}" class="btn btn-warning btn-sm">Edit</a>
+                            <a href="/delete/{{ row[0] }}" class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="/create" class="btn btn-primary">Add New Vehicle</a>
+    </div>
+</body>
+</html>
 
