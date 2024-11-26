@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="container mt-4">
-        <h2>Vehicle Maintenance List</h2>
+        <h2>Vehicle List</h2>
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -20,15 +20,15 @@
             </thead>
             <tbody>
                 {% for vehicle in vehicles %}
-                    <tr>
-                        <td>{{ vehicle[1] }}</td>  <!-- Make -->
-                        <td>{{ vehicle[2] }}</td>  <!-- Model -->
-                        <td>{{ vehicle[3] }}</td>  <!-- Owner -->
-                        <td>
-                            <a href="/update/{{ vehicle[0] }}" class="btn btn-warning btn-sm">Edit</a>
-                            <a href="/delete/{{ vehicle[0] }}" class="btn btn-danger btn-sm">Delete</a>
-                        </td>
-                    </tr>
+                <tr>
+                    <td>{{ vehicle['make'] }}</td>
+                    <td>{{ vehicle['model'] }}</td>
+                    <td>{{ vehicle['owner'] }}</td>
+                    <td>
+                        <a href="/update/{{ vehicle['id'] }}" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="/delete/{{ vehicle['id'] }}" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
                 {% endfor %}
             </tbody>
         </table>
