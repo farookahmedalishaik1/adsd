@@ -19,14 +19,14 @@
                 </tr>
             </thead>
             <tbody>
-                {% for row in rows %}
+                {% for vehicle in vehicles %}
                     <tr>
-                        <td>{{ row[1] }}</td>  <!-- Make -->
-                        <td>{{ row[2] }}</td>  <!-- Model -->
-                        <td>{{ row[3] }}</td>  <!-- Owner -->
+                        <td>{{ vehicle[1] }}</td>  <!-- Make -->
+                        <td>{{ vehicle[2] }}</td>  <!-- Model -->
+                        <td>{{ vehicle[3] }}</td>  <!-- Owner -->
                         <td>
-                            <a href="/update/{{ row[0] }}" class="btn btn-warning btn-sm">Edit</a>
-                            <a href="/delete/{{ row[0] }}" class="btn btn-danger btn-sm">Delete</a>
+                            <a href="/update/{{ vehicle[0] }}" class="btn btn-warning btn-sm">Edit</a>
+                            <a href="/delete/{{ vehicle[0] }}" class="btn btn-danger btn-sm">Delete</a>
                         </td>
                     </tr>
                 {% endfor %}
@@ -36,4 +36,3 @@
     </div>
 </body>
 </html>
-
