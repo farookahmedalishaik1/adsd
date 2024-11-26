@@ -1,117 +1,97 @@
 import sqlite3
 
-# Function to connect to the SQLite database
-def get_db_connection():
-    conn = sqlite3.connect('database.db')  # SQLite database file
-    conn.row_factory = sqlite3.Row  # To return rows as dictionaries
-    return conn
+class Database:
+    def __init__(self, db_name="database.db"):
+        self.db_name = db_name
 
-# Function to initialize the database (create tables if they don't exist)
-def init_db():
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    
-    # Create Vehicles table if it doesn't exist
-    cursor.execute('''
-    CREATE TABLE IF NOT EXISTS vehicles (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        make TEXT NOT NULL,
-        model TEXT NOT NULL,
-        owner TEXT NOT NULL
-    )
-    ''')
+    def _connect(self):
+        """Establish a connection to the SQLite database."""
+        conn = sqlite3.connect(self.db_name)
+        conn.row_factory = sqlite3.Row  # This allows us to access rows by column name
+        return conn
 
-    # Create MaintenanceRecords table if it doesn't exist
-    cursor.execute('''
-    CREATE TABLE IF NOT EXISTS maintenance_records (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        vehicle_id INTEGER NOT NULL,
-        service_date TEXT NOT NULL,
-        service_type TEXT NOT NULL,
-        cost REAL NOT NULL,
-        FOREIGN KEY (vehicle_id) REFERENCES vehicles (id)
-    )
-    ''')
+    def init_db(self):
+        """Initialize the database with necessary tables."""
+        with self._connect() as conn:
+            cursor = conn.cursor()
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS vehicles (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    make TEXT NOT NULL,
+                    model TEXT NOT NULL,
+                    owner TEXT NOT NULL
+                )
+            """)
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS maintenance (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    vehicle_id INTEGER NOT NULL,
+                    service_date TEXT NOT NULL,
+                    service_type TEXT NOT NULL,
+                    cost REAL NOT NULL,
+                    FOREIGN KEY (vehicle_id) REFERENCES vehicles(id)
+                )
+            """)
+            conn.commit()
 
-    conn.commit()
-    conn.close()
+    def get_all_vehicles(self):
+        """Fetch all vehicles from the database."""
+        with self._connect() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM vehicles")
+            return cursor.fetchall()
 
-# Function to add a new vehicle to the vehicles table
-def add_vehicle(make, model, owner):
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    cursor.execute('''
-    INSERT INTO vehicles (make, model, owner) 
-    VALUES (?, ?, ?)
-    ''', (make, model, owner))
-    conn.commit()
-    conn.close()
+    def add_vehicle(self, make, model, owner):
+        """Add a new vehicle to the database."""
+        with self._connect() as conn:
+            cursor = conn.cursor()
+            cursor.execute("""
+                INSERT INTO vehicles (make, model, owner) 
+                VALUES (?, ?, ?)
+            """, (make, model, owner))
+            conn.commit()
 
-# Function to get all vehicles from the vehicles table
-def get_all_vehicles():
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    cursor.execute('SELECT * FROM vehicles')
-    vehicles = cursor.fetchall()
-    conn.close()
-    return vehicles
+    def get_vehicle_by_id(self, vehicle_id):
+        """Fetch a vehicle by its ID."""
+        with self._connect() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM vehicles WHERE id = ?", (vehicle_id,))
+            return cursor.fetchone()
 
-# Function to get a specific vehicle by ID
-def get_vehicle_by_id(vehicle_id):
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    cursor.execute('SELECT * FROM vehicles WHERE id = ?', (vehicle_id,))
-    vehicle = cursor.fetchone()
-    conn.close()
-    return vehicle
+    def update_vehicle(self, vehicle_id, make, model, owner):
+        """Update the details of an existing vehicle."""
+        with self._connect() as conn:
+            cursor = conn.cursor()
+            cursor.execute("""
+                UPDATE vehicles 
+                SET make = ?, model = ?, owner = ? 
+                WHERE id = ?
+            """, (make, model, owner, vehicle_id))
+            conn.commit()
 
-# Function to update vehicle details by ID
-def update_vehicle(vehicle_id, make, model, owner):
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    cursor.execute('''
-    UPDATE vehicles
-    SET make = ?, model = ?, owner = ?
-    WHERE id = ?
-    ''', (make, model, owner, vehicle_id))
-    conn.commit()
-    conn.close()
+    def delete_vehicle(self, vehicle_id):
+        """Delete a vehicle from the database."""
+        with self._connect() as conn:
+            cursor = conn.cursor()
+            cursor.execute("DELETE FROM vehicles WHERE id = ?", (vehicle_id,))
+            conn.commit()
 
-# Function to delete a vehicle by ID
-def delete_vehicle(vehicle_id):
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    cursor.execute('DELETE FROM vehicles WHERE id = ?', (vehicle_id,))
-    conn.commit()
-    conn.close()
+    def get_maintenance_records_by_vehicle(self, vehicle_id):
+        """Fetch all maintenance records for a specific vehicle."""
+        with self._connect() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM maintenance WHERE vehicle_id = ?", (vehicle_id,))
+            return cursor.fetchall()
 
-# Function to add a maintenance record for a specific vehicle
-def add_maintenance_record(vehicle_id, service_date, service_type, cost):
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    cursor.execute('''
-    INSERT INTO maintenance_records (vehicle_id, service_date, service_type, cost) 
-    VALUES (?, ?, ?, ?)
-    ''', (vehicle_id, service_date, service_type, cost))
-    conn.commit()
-    conn.close()
+    def add_maintenance_record(self, vehicle_id, service_date, service_type, cost):
+        """Add a maintenance record for a specific vehicle."""
+        with self._connect() as conn:
+            cursor = conn.cursor()
+            cursor.execute("""
+                INSERT INTO maintenance (vehicle_id, service_date, service_type, cost) 
+                VALUES (?, ?, ?, ?)
+            """, (vehicle_id, service_date, service_type, cost))
+            conn.commit()
 
-# Function to get all maintenance records for a specific vehicle
-def get_maintenance_records_by_vehicle(vehicle_id):
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    cursor.execute('''
-    SELECT * FROM maintenance_records WHERE vehicle_id = ?
-    ''', (vehicle_id,))
-    records = cursor.fetchall()
-    conn.close()
-    return records
-
-# Function to get all maintenance records
-def get_all_maintenance_records():
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    cursor.execute('SELECT * FROM maintenance_records')
-    records = cursor.fetchall()
-    conn.close()
-    return records
+# Create a Database instance
+db = Database()
