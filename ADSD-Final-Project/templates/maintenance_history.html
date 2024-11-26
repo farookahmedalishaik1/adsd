@@ -1,1 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maintenance History</title>
+</head>
+<body>
+    <h1>Maintenance History for {{ vehicle.name }}</h1>
+    
+    {% if maintenance %}
+        <table border="1" cellpadding="10">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Cost</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in maintenance %}
+                <tr>
+                    <td>{{ item.date }}</td>
+                    <td>{{ item.description }}</td>
+                    <td>{{ item.cost }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No maintenance records found for this vehicle.</p>
+    {% endif %}
+    
+    <a href="/">Back to Home</a>
+</body>
+</html>
 
