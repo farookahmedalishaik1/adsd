@@ -1,8 +1,10 @@
 from flask import Flask, render_template, request, redirect, url_for
 import sqlite3
 from database import Database 
-
 from datetime import datetime
+
+
+app = Flask(__name__)
 
 # Format the date to a more readable format
 @app.template_filter('format_date')
@@ -14,7 +16,6 @@ def format_date(value):
 def format_cost(value):
     return f"{value:.2f}"
 
-app = Flask(__name__)
 
 # To initialize the database, will create tables if doesnt exist
 db = Database("database.db")
