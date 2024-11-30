@@ -181,7 +181,7 @@ def view_maintenance_history(vehicle_id):
 
     # Fetch maintenance records with sorting
     cursor.execute("""
-        SELECT * FROM maintenance 
+        SELECT service_date, description, cost FROM maintenance 
         WHERE vehicle_id = ? 
         ORDER BY service_date DESC
     """, (vehicle_id,))
