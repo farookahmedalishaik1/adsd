@@ -30,17 +30,11 @@
             </thead>
             <tbody>
                 {% for record in maintenance %}
-                <tr>
-                    <td>{{ record[0] | format_date }}</td>
-
-                    <td>{{ record[1] }}</td>
-                    <td>${{ record[2] | format_cost }}</td>
-
-                </tr>
-                {% else %}
-                <tr>
-                    <td colspan="3" class="text-center">No maintenance records found for this vehicle.</td>
-                </tr>
+                    <tr>
+                        <td>{{ record.service_date | format_date }}</td>  <!-- Service Date -->
+                        <td>{{ record.description }}</td>  <!-- Description -->
+                        <td>{{ record.cost | format_cost }}</td>  <!-- Cost -->
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>
