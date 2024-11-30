@@ -22,8 +22,12 @@ def format_date(value):
 # Format the cost to two decimal places
 @app.template_filter('format_cost')
 def format_cost(value):
-    return f"{value:.2f}"
-
+    try:
+        # Try converting the value to a float, then format it
+        return f"${float(value):.2f}"
+    except (ValueError, TypeError):
+        # If the value cannot be converted to float, return it as-is (or handle the error)
+        return value
 
 # To initialize the database, will create tables if doesnt exist
 db = Database("database.db")
