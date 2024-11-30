@@ -31,9 +31,11 @@
             <tbody>
                 {% for record in maintenance %}
                 <tr>
-                    <td>{{ record[0] }}</td>
+                    <td>{{ record[0] | format_date }}</td>
+
                     <td>{{ record[1] }}</td>
-                    <td>${{ record[2] }}</td>
+                    <td>${{ record[2] | format_cost }}</td>
+
                 </tr>
                 {% else %}
                 <tr>
