@@ -1,7 +1,11 @@
 from flask import Flask, render_template, request, redirect, url_for
 import sqlite3
+from database import Database 
 
 app = Flask(__name__)
+
+# To initialize the database, will create tables if doesnt exist
+db = Database("database.db")
 
 # Database connection function
 def get_db_connection():
