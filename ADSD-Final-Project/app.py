@@ -2,6 +2,18 @@ from flask import Flask, render_template, request, redirect, url_for
 import sqlite3
 from database import Database 
 
+from datetime import datetime
+
+# Format the date to a more readable format
+@app.template_filter('format_date')
+def format_date(value):
+    return datetime.strptime(value, '%Y-%m-%d').strftime('%B %d, %Y')
+
+# Format the cost to two decimal places
+@app.template_filter('format_cost')
+def format_cost(value):
+    return f"{value:.2f}"
+
 app = Flask(__name__)
 
 # To initialize the database, will create tables if doesnt exist
