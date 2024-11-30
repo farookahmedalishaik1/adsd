@@ -9,7 +9,15 @@ app = Flask(__name__)
 # Format the date to a more readable format
 @app.template_filter('format_date')
 def format_date(value):
-    return datetime.strptime(value, '%Y-%m-%d').strftime('%B %d, %Y')
+    # Ensure value is a string before trying to format it
+    value = str(value)
+    
+    try:
+        # Try parsing it as a date in 'YYYY-MM-DD' format
+        return datetime.strptime(value, '%Y-%m-%d').strftime('%B %d, %Y')
+    except ValueError:
+        # If it doesn't match the format, return the value as is
+        return value
 
 # Format the cost to two decimal places
 @app.template_filter('format_cost')
