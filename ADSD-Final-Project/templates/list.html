@@ -8,23 +8,26 @@
     <table border="1">
         <tr>
             <th>ID</th>
-            <th>Name</th>
+            <th>Owner</th>
+            <th>Make</th>
             <th>Model</th>
             <th>Year</th>
-            <th>Owner</th>
+            <th>Maintenance Count</th>            
             <th>Actions</th>
         </tr>
         {% for vehicle in vehicles %}
         <tr>
             <td>{{ vehicle.id }}</td>
-            <td>{{ vehicle.name }}</td>
+            <td>{{ vehicle.owner_name }}</td>
+            <td>{{ vehicle.make }}</td>
             <td>{{ vehicle.model }}</td>
             <td>{{ vehicle.year }}</td>
-            <td>{{ vehicle.owner }}</td>
+            <td>{{ vehicle.maintenance_count }}</td>
             <td>
                 <a href="/vehicle/update/{{ vehicle.id }}">Update</a> |
                 <a href="/vehicle/delete/{{ vehicle.id }}">Delete</a> |
-                <a href="/vehicle/{{ vehicle.id }}/maintenance">View Maintenance History</a>
+                <a href="/vehicle/{{ vehicle.id }}/maintenance">View Maintenance History</a> |
+                <a href="/vehicle/{{ vehicle.id }}/maintenance/add">Add Maintenance Record</a>           
             </td>
         </tr>
         {% endfor %}
