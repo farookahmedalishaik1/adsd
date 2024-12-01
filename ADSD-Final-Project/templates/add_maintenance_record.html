@@ -6,13 +6,13 @@
 <body>
     <h1>Add Maintenance Record</h1>
     <form action="/vehicle/{{ vehicle_id }}/maintenance/add" method="POST">
-        <p>Vehicle ID: <input name="vehicle_id" required /></p>
+   <!-- <p>Vehicle ID: <input name="vehicle_id" required /></p> -->
         <p>Date: <input name="service_date" type="date" required />
         <p>Description: <textarea name="description" required></textarea></p>
         <p>Cost: <input name="cost" type="number" min="0" step="0.01" required /></p>
         <button type="submit">Add Record</button>
     </form>
     <br>
-    <a href="/vehicle/{{ vehicle_id }}/maintenance">Back to Maintenance History</a> <!-- Corrected link -->
+    <a href="/vehicle/{{ vehicle_id }}/maintenance">Back to Maintenance History</a> 
 </body>
 </html>
