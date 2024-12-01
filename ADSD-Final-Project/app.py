@@ -181,9 +181,11 @@ def view_maintenance_history(vehicle_id):
 
     # Fetch maintenance records with sorting
     cursor.execute("""
-        SELECT service_date, description, cost FROM maintenance 
-        WHERE vehicle_id = ? 
-        ORDER BY service_date DESC
+        SELECT maintenance.id, vehicles.owner_name, vehicles.make, vehicles.model, maintenance.service_date, maintenance.description, maintenance.cost
+        FROM maintenance 
+        JOIN vehicles ON maintenance.vehicle_id = vehicles.id
+        WHERE maintenance.vehicle_id = ? 
+        ORDER BY maintenance.service_date DESC
     """, (vehicle_id,))
     maintenance_history = cursor.fetchall()
     
@@ -192,7 +194,8 @@ def view_maintenance_history(vehicle_id):
     return render_template(
         "maintenance_history.html", 
         vehicle=vehicle, 
-        maintenance=maintenance_history
+        maintenance=maintenance_history,
+        vehicle_id=vehicle_id
     )
 
 # Add maintenance record
