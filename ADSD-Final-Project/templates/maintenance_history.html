@@ -4,7 +4,7 @@
     <title>Maintenance History</title>
 </head>
 <body>
-    <h1>Maintenance History</h1>
+    <h1>Maintenance History</h1> 
     <table border="1">
         <tr>
             <th>Record ID</th>
@@ -19,7 +19,7 @@
             <td>{{ record.owner_name }} {{ record.make }} {{ record.model }}</td>
             <td>{{ record.service_date }}</td>
             <td>{{ record.description }}</td>
-            <td>{{ record.cost }}</td>
+            <td>{{ record.cost | format.cost }}</td>
         </tr>
         {% endfor %}
     </table>
