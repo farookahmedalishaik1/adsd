@@ -22,8 +22,9 @@
             <td>{{ vehicle.year }}</td>
             <td>{{ vehicle.owner }}</td>
             <td>
-                <a href="/vehicle/update/{{ vehicle.id }}">Update</a>
-                <a href="/vehicle/delete/{{ vehicle.id }}">Delete</a>
+                <a href="/vehicle/update/{{ vehicle.id }}">Update</a> |
+                <a href="/vehicle/delete/{{ vehicle.id }}">Delete</a> |
+                <a href="/vehicle/{{ vehicle.id }}/maintenance">View Maintenance History</a>
             </td>
         </tr>
         {% endfor %}
