@@ -5,7 +5,7 @@
 </head>
 <body>
     <h1>Add Maintenance Record</h1>
-    <form action="/maintenance/add" method="POST">
+    <form action="/vehicle/{{ vehicle_id }}/maintenance/add" method="POST">
         <p>Vehicle ID: <input name="vehicle_id" required /></p>
         <p>Date: <input name="date" type="date" required /></p>
         <p>Description: <textarea name="description" required></textarea></p>
