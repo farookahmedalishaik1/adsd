@@ -6,10 +6,10 @@
 <body>
     <h1>Update Vehicle</h1>
     <form action="/vehicle/update/{{ vehicle.id }}" method="POST">
-        <p>Owner Name: <input name="owner_name" required /></p>
-        <p>Make: <input name="make" required /></p>
-        <p>Model: <input name="model" required /></p>
-        <p>Year: <input name="year" type="number" min="1900" required /></p>
+        <p>Owner Name: <input name="owner_name" value="{{ vehicle.owner_name }}" required /></p>
+        <p>Make: <input name="make" value="{{ vehicle.make }}" required /></p>
+        <p>Model: <input name="model" value="{{ vehicle.model }}" required /></p>
+        <p>Year: <input name="year" value="{{ vehicle.year }}" type="number" min="1900" required /></p>
         <button type="submit">Update</button>
     </form>
     <br>
