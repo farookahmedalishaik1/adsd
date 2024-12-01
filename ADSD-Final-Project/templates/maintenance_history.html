@@ -17,7 +17,7 @@
         <tr>
             <td>{{ record.id }}</td>
             <td>{{ record.owner_name }} {{ record.make }} {{ record.model }}</td>
-            <td>{{ record.service_date }}</td>
+            <td>{{ record.service_date | format_date }}</td>
             <td>{{ record.description }}</td>
             <td>{{ record.cost | format_cost }}</td>
         </tr>
