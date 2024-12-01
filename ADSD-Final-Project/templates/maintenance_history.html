@@ -19,7 +19,7 @@
             <td>{{ record.owner_name }} {{ record.make }} {{ record.model }}</td>
             <td>{{ record.service_date }}</td>
             <td>{{ record.description }}</td>
-            <td>{{ record.cost | format.cost }}</td>
+            <td>{{ record.cost | format_cost }}</td>
         </tr>
         {% endfor %}
     </table>
