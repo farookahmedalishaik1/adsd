@@ -5,7 +5,7 @@
 </head>
 <body>
     <h1>Update Vehicle</h1>
-    <form action="/vehicle/update/{{ vehicle.id }}" method="POST">
+    <form action="/update/{{ vehicle.id }}" method="POST">
         <p>Owner Name: <input name="owner_name" value="{{ vehicle.owner_name }}" required /></p>
         <p>Make: <input name="make" value="{{ vehicle.make }}" required /></p>
         <p>Model: <input name="model" value="{{ vehicle.model }}" required /></p>
